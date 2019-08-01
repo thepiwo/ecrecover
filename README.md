@@ -9,6 +9,5 @@ to compile:
 
 to test:
 `make` (requires gcc)
-./test
 
 (if you don't see `Test passed` then something went wrong).
