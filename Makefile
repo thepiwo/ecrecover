@@ -10,3 +10,4 @@ LDPATH = -Ltarget/debug
 
 test: src/test.c include/ecrecover.h target/debug/libecrecover.so
 	$(CC) -o $@ $^ $(CFLAGS) $(LDPATH)
+	./test
