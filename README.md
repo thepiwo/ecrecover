@@ -2,7 +2,7 @@
 FFI export of Ethereum's ecrecover
 
 prerequisite:
-- a checked out copy of parity-ethereum (https://github.com/paritytech/parity-ethereum) checked out in the same directory this is (i.e. it will be referenced as `../parity-ethereum`)
+- a checked out copy of my fork of parity-ethereum (https://github.com/johnsnewby/parity-ethereum) checked out in the same directory this is (i.e. it will be referenced as `../parity-ethereum`)
 
 to compile:
 `cargo build`
