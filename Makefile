@@ -1,13 +1,26 @@
+DEBUG ?= 0
+ifeq ($(DEBUG), 1)
+    CFLAGS =-DDEBUG=1
+else
+    CFLAGS=-DNDEBUG
+endif
 
 CC = gcc
 LIBS = -llibecrecover.so
 LDPATH = -Ltarget/debug
+INCLUDEPATH = -Iinclude
 
 %.o: %.c $(DEPS)
-	$(CC) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $(INCLUDEPATH) $@ $<
 
+all: test erl_ecrecover
 
-
-test: src/test.c target/debug/libecrecover.so
-	$(CC) -o $@ $^ $(CFLAGS) $(LDPATH)
+test: src/test.c src/base64.c target/debug/libecrecover.so
+	$(CC) -o $@ $^ $(INCLUDEPATH) $(CFLAGS) $(LDPATH)
 	./test
+
+erl_ecrecover: src/erl_ecrecover.c src/base64.c src/erl_comm.c target/debug/libecrecover.so
+	$(CC) -o$ $@ $^ $(INCLUDEPATH) $(CFLAGS) $(LDPATH)
+
+clean:
+	rm -f erl_ecrecover test
