@@ -2,7 +2,7 @@ DEBUG ?= 0
 ifeq ($(DEBUG), 1)
     CFLAGS =-DDEBUG=1
 else
-    CFLAGS=-DNDEBUG
+    CFLAGS=-DNDEBUG -Ofast
 endif
 
 CC = gcc
@@ -15,7 +15,7 @@ INCLUDEPATH = -Iinclude
 
 all: test erl_ecrecover
 
-test: src/test.c src/base64.c target/debug/libecrecover.so
+test: src/test.c src/base64.c target/release/libecrecover.so
 	$(CC) -o $@ $^ $(INCLUDEPATH) $(CFLAGS) $(LDPATH)
 	./test
 

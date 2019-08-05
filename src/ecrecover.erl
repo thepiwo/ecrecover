@@ -1,6 +1,11 @@
 -module(ecrecover).
 -export([start/1, stop/0, init/1]).
 -export([ecrecover/1]).
+-export([time_taken_to_execute/1]).
+
+time_taken_to_execute(F) -> Start = os:timestamp(),
+  F(),
+  io:format("total time taken ~f seconds~n", [timer:now_diff(os:timestamp(), Start) / 1000000]).
 
 start(ExtPrg) ->
     spawn(?MODULE, init, [ExtPrg]).
