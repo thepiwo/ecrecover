@@ -13,6 +13,8 @@ use crate::ethcore_builtin::Implementation;
 use c_vec::{CVec};
 use parity_bytes::BytesRef;
 use rustler::*;
+use rustler::types::atom::ok;
+use std::io::Write;
 use std::ptr::copy_nonoverlapping;
 
 const INPUT_LENGTH: usize = 512;
@@ -27,37 +29,27 @@ mod atoms {
 rustler_export_nifs!(
     "nifecrecover",
     [
-        ("ecrecover", 2, nif_ecrecover),
+        ("ecrecover", 1, nif_ecrecover),
     ],
     Some(on_load)
 );
 
-struct EcrecoverResource { }
 
 #[no_mangle]
 fn on_load(env: Env, _load_info: Term) -> bool {
-    println!("on_load");
-    rustler::resource_struct_init!(EcrecoverResource, env);
     true
 }
 
-pub fn nif_ecrecover<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
-    let input: String = args[0].decode()?;
-    let mut output: String = args[1].decode()?;
+pub fn nif_ecrecover<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    let input: Binary = args[0].decode()?;
     let mut byte_ref = Vec::new();
     let ecrecover = EcRecover { };
-    let result = match ecrecover.execute(input.as_bytes(),
+    let result = match ecrecover.execute(input.as_slice(),
                                          &mut BytesRef::Flexible(&mut byte_ref)) {
-        Ok(x) => x,
+        Ok(_) => (),
         Err(e) => return Err(rustler::Error::Atom("ecrecover failed")),
     };
-    match String::from_utf8(byte_ref) {
-        Ok(x) => {
-            output.push_str(&x);
-            Ok((atoms::ok(), true).encode(env))
-        },
-        Err(x) => Err(rustler::Error::Atom("Invalid UTF-8")),
-    }
+    Ok(byte_ref.as_slice().encode(env))
 }
 
 /**
