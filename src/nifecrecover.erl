@@ -23,7 +23,17 @@ ecrecover_hex(Input) ->
 
 
 load() ->
-    ok = erlang:load_nif("/home/newby/projects/ethereum/ecrecover/target/release/libecrecover", 0).
+    erlang:display(file:get_cwd()),
+    Dir = case code:priv_dir(nifecrecover) of
+              {error, bad_name} ->
+                  filename:join(
+                    filename:dirname(
+                      filename:dirname(
+                        code:which(?MODULE))), "priv");
+              D -> D
+          end,
+    SoName = filename:join(Dir, atom_to_list(?MODULE)),
+    ok = erlang:load_nif(SoName, 0).
 
 not_loaded(Line) ->
     erlang:nif_error({error, {not_loaded, [{module, ?MODULE}, {line, Line}]}}).

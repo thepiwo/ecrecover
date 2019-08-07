@@ -1,5 +1,5 @@
 [package]
-name = "ecrecover"
+name = "nifecrecover"
 version = "0.1.0"
 authors = ["John Newby <john@newby.org>"]
 edition = "2018"
