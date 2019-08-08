@@ -1,4 +1,4 @@
--module(nifecrecover).
+-module(ecrecover).
 
 %% API
 -export([ecrecover/1,
@@ -24,7 +24,7 @@ ecrecover_hex(Input) ->
 
 load() ->
     erlang:display(file:get_cwd()),
-    Dir = case code:priv_dir(nifecrecover) of
+    Dir = case code:priv_dir(ecrecover) of
               {error, bad_name} ->
                   filename:join(
                     filename:dirname(

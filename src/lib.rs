@@ -19,7 +19,7 @@ mod atoms {
 }
 
 rustler_export_nifs!(
-    "nifecrecover",
+    "ecrecover",
     [
         ("ecrecover", 1, nif_ecrecover),
     ],
