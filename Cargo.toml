@@ -17,9 +17,3 @@ rustler = "0.20.0"
 
 [lib]
 crate-type = ["cdylib"]
-
-[target.x86_64-apple-darwin]
-rustflags = [
-    "-C", "link-arg=-undefined",
-    "-C", "link-arg=dynamic_lookup",
-]
