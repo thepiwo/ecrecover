@@ -23,8 +23,7 @@ ecrecover_hex(Input) ->
 
 
 load() ->
-    erlang:display(file:get_cwd()),
-    Dir = case code:priv_dir(ecrecover) of
+    Dir = case code:priv_dir(ecrecoverprebuilt) of
               {error, bad_name} ->
                   filename:join(
                     filename:dirname(
