@@ -2,3 +2,6 @@
 **/*.rs.bk
 Cargo.lock
 **/*~
+/parity-ethereum
+/_build
+/ebin
