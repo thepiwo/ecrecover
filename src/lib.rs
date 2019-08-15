@@ -37,9 +37,9 @@ pub fn nif_ecrecover<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Er
     let mut byte_ref = Vec::new();
     let ecrecover = EcRecover { };
     let _result = match ecrecover.execute(input.as_slice(),
-                                          &mut BytesRef::Flexible(&mut byte_ref)) {
+                                          &mut BytesRef::Fixed(&mut byte_ref)) {
         Ok(_) => (),
-        Err(_e) => return Err(rustler::Error::Atom("ecrecover failed")),
+        Err(_e) => return Err(rustler::Error::Atom("ecrecover_failed")),
     };
     Ok((atoms::ok(), byte_ref.as_slice()).encode(env))
 }
