@@ -20,6 +20,7 @@ not_loaded(Line) ->
 %%=============================================================================
 %% External API
 
+-spec recover(<<_:(32*8)>>, <<_:(65*8)>>) -> <<_:(32*8)>>.
 recover(<<_:32/binary>> = Hash, <<_:65/binary>> = Sig) ->
     Input = <<Hash/binary, 0:(8*31), Sig/binary>>,
     case recover_(Input) of
