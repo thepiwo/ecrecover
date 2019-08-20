@@ -5,3 +5,5 @@ Cargo.lock
 /parity-ethereum
 /_build
 /ebin
+/priv/ecrecover.dll
+/priv/ecrecover.so
