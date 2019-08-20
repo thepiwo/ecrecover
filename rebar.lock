@@ -1,5 +1,5 @@
 [{<<"ecrecoverprebuilt">>,
   {ecrecoverprebuilt_app_with_priv_from_git,
       {git,"https://github.com/aeternity/ecrecover-prebuilt.git",
-          {ref,"fc52b89643073be5ab65b192e466933d903994d7"}}},
+          {ref,"274f90ba3d93468e8eec405309b43b6c97ae4246"}}},
   0}].
