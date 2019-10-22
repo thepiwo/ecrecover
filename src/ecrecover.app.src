@@ -1,12 +1,10 @@
 {application, ecrecover,
- [{description, "ecrecover implementation"},
+ [{description, "FFI (NIF) export of Ethereum's ecrecover for use from Erlang"},
   {vsn, "1.0.0"},
   {registered, []},
   {applications,
    [kernel,
     stdlib,
-    lager,
-    enacl,
     ecrecoverprebuilt
    ]},
   {env,[]},
