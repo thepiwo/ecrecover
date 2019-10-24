@@ -19,13 +19,10 @@ all: priv/$(nif_lib) compile
 compile:
 	./rebar3 compile
 
-priv/$(nif_lib): src/lib.rs parity-ethereum/
+priv/$(nif_lib): src/lib.rs
 	cargo build --release
 	cp target/release/$(nif_lib_src) $@
 
 clean:
 	rm -f priv/$(nif_lib) target/release/$(nif_lib_src)
 	./rebar3 clean
-
-parity-ethereum/:
-	git clone https://github.com/aeternity/parity-ethereum.git
