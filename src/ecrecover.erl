@@ -11,8 +11,14 @@
 %% NIF API
 
 load() ->
-    SoName = filename:join(priv(), atom_to_list(?MODULE)),
-    ok = erlang:load_nif(SoName, 0).
+    % Prefer locally built NIF (good for testing and exotic platforms) over
+    % prebuilt binaries.
+    case load_local_nif() of
+        ok ->
+            ok;
+        {error, _} ->
+            load_prebuilt_nif()
+    end.
 
 not_loaded(Line) ->
     erlang:nif_error({error, {not_loaded, [{module, ?MODULE}, {line, Line}]}}).
@@ -35,15 +41,21 @@ recover(<<_:32/binary>> = Hash, <<_:65/binary>> = Sig) ->
 %%=============================================================================
 %% Internal Functions
 
-priv()->
-  case code:priv_dir(ecrecoverprebuilt) of
-      {error, _} ->
-          EbinDir = filename:dirname(code:which(?MODULE)),
-          AppPath = filename:dirname(EbinDir),
-          filename:join(AppPath, "priv");
-      Path ->
-          Path
-  end.
+load_local_nif() ->
+    EbinDir = filename:dirname(code:which(?MODULE)),
+    AppDir = filename:dirname(EbinDir),
+    PrivDir = filename:join(AppDir, "priv"),
+    SoName = filename:join(PrivDir, atom_to_list(?MODULE)),
+    erlang:load_nif(SoName, 0).
+
+load_prebuilt_nif() ->
+    case code:priv_dir(ecrecoverprebuilt) of
+        {error, _} ->
+            {error, prebuilt_priv_dir_not_found};
+        PrivDir ->
+            SoName = filename:join(PrivDir, atom_to_list(?MODULE)),
+            erlang:load_nif(SoName, 0)
+    end.
 
 recover_(_Input) ->
     not_loaded(?LINE).
