@@ -1,15 +1,29 @@
 # ecrecover
 FFI (NIF) export of Ethereum's ecrecover for use from Erlang.
 
-### prerequisite:
-- a checked out copy of my fork of parity-ethereum (https://github.com/johnsnewby/parity-ethereum) checked out into this directory this is (i.e. it will be referenced as `./parity-ethereum`)
+### Prerequisites
+The NIF is written in Rust, therefore the following additional build
+dependencies are needed:
 
-### to compile:
-`cargo build`
+- Rust
+- Cargo
+- Cmake
+
+### Build
+Execute:
+```
+make
+```
+
+To disable the local build of the NIF library, e.g. to use a prebuilt binary,
+use the following command:
+```
+ECRECOVER_DISABLE_NIF_BUILD=true make
+```
 
 ## Erlang integration
 
-The shared library uses NIF. Use the erlang file `src/ecrecover.erl` to use this:
+The shared library uses NIF. Use the Erlang file `src/ecrecover.erl` to use this:
 
 ```
 c("src/ecrecover").

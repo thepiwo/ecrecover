@@ -20,8 +20,10 @@ compile:
 	./rebar3 compile
 
 priv/$(nif_lib): src/lib.rs
+ifneq ($(ECRECOVER_DISABLE_NIF_BUILD), true)
 	cargo build --release
 	cp target/release/$(nif_lib_src) $@
+endif
 
 clean:
 	rm -f priv/$(nif_lib) target/release/$(nif_lib_src)
